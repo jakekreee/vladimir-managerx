@@ -8,6 +8,7 @@ class Database:
         self._init_db()
 
     def _init_db(self):
+        # Таблица пользователей
         self.cur.execute('''
             CREATE TABLE IF NOT EXISTS users (
                 user_id INTEGER,
@@ -23,6 +24,7 @@ class Database:
                 PRIMARY KEY (user_id, chat_id)
             )
         ''')
+        # Таблица глобальных банов
         self.cur.execute('''
             CREATE TABLE IF NOT EXISTS global_bans (
                 user_id INTEGER,
@@ -30,12 +32,14 @@ class Database:
                 PRIMARY KEY (user_id)
             )
         ''')
+        # Таблица групп
         self.cur.execute('''
             CREATE TABLE IF NOT EXISTS groups (
                 group_id INTEGER PRIMARY KEY,
                 owner_id INTEGER
             )
         ''')
+        # Таблица чатов
         self.cur.execute('''
             CREATE TABLE IF NOT EXISTS chats (
                 chat_id INTEGER PRIMARY KEY,
@@ -44,6 +48,7 @@ class Database:
                 log_enabled INTEGER DEFAULT 0
             )
         ''')
+        # Таблица логов
         self.cur.execute('''
             CREATE TABLE IF NOT EXISTS logs (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -53,6 +58,7 @@ class Database:
                 timestamp INTEGER
             )
         ''')
+        # Таблица банов (история)
         self.cur.execute('''
             CREATE TABLE IF NOT EXISTS bans (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -67,7 +73,7 @@ class Database:
         ''')
         self.conn.commit()
 
-    # ---------- Пользователи ----------
+    # ==================== ПОЛЬЗОВАТЕЛИ ====================
     def get_user(self, user_id, chat_id):
         self.cur.execute('SELECT * FROM users WHERE user_id=? AND chat_id=?', (user_id, chat_id))
         return self.cur.fetchone()
@@ -151,7 +157,7 @@ class Database:
         res = self.get_user(user_id, chat_id)
         return res[9] if res else 0
 
-    # ---------- Баны (история) ----------
+    # ==================== БАНЫ (ИСТОРИЯ) ====================
     def add_ban_record(self, user_id, chat_id, moderator_id, reason, expire_at, is_global=0):
         issued_at = int(time.time())
         self.cur.execute('''
@@ -170,7 +176,7 @@ class Database:
             self.cur.execute('SELECT * FROM bans WHERE user_id=? ORDER BY issued_at DESC', (user_id,))
         return self.cur.fetchall()
 
-    # ---------- Глобальные баны ----------
+    # ==================== ГЛОБАЛЬНЫЕ БАНЫ ====================
     def get_global_ban(self, user_id):
         self.cur.execute('SELECT ban_until FROM global_bans WHERE user_id=?', (user_id,))
         res = self.cur.fetchone()
@@ -185,7 +191,7 @@ class Database:
         self.cur.execute('DELETE FROM global_bans WHERE user_id=?', (user_id,))
         self.conn.commit()
 
-    # ---------- Группы и чаты ----------
+    # ==================== ГРУППЫ И ЧАТЫ ====================
     def create_group(self, group_id, owner_id):
         self.cur.execute('INSERT OR REPLACE INTO groups (group_id, owner_id) VALUES (?, ?)', (group_id, owner_id))
         self.conn.commit()
@@ -238,7 +244,7 @@ class Database:
                          (chat_id, user_id, action, timestamp))
         self.conn.commit()
 
-    # ---------- Списки ----------
+    # ==================== СПИСКИ ====================
     def get_users_with_warn(self, chat_id):
         self.cur.execute('SELECT user_id, warn_count FROM users WHERE chat_id=? AND warn_count>0', (chat_id,))
         return self.cur.fetchall()
