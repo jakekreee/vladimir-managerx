@@ -1,0 +1,14 @@
+version: 1
+project: vk-bot-manager
+
+deploy:
+  - name: production
+    type: docker
+    dockerfile: Dockerfile
+    ports:
+      - 8080
+    env:
+      - name: TOKEN
+        value: ""  # Заполняется через секреты Amvera
+      - name: GROUP_ID
+        value: ""  # Заполняется через секреты Amvera
