@@ -1,27 +1,28 @@
 import os
 
-# Загружаем переменные из окружения (секреты Amvera или .env)
+# Загружаем переменные из окружения (секреты Amvera)
 TOKEN = os.getenv("TOKEN", "")
 GROUP_ID = os.getenv("GROUP_ID", "")
-BOT_ID = os.getenv("BOT_ID", None)  # можно оставить None, если не знаете
+BOT_ID = os.getenv("BOT_ID", None)
 
-# Проверяем, что основные переменные заданы
+# Проверяем, что переменные заданы
 if not TOKEN:
-    raise ValueError("❌ TOKEN не найден! Добавьте его в секреты Amvera.")
+    raise ValueError("❌ TOKEN не задан! Добавьте его в секреты Amvera (Settings → Environment Variables).")
 if not GROUP_ID:
-    raise ValueError("❌ GROUP_ID не найден! Добавьте его в секреты Amvera.")
+    raise ValueError("❌ GROUP_ID не задан! Добавьте его в секреты Amvera (Settings → Environment Variables).")
 
-# Преобразуем GROUP_ID в число (если нужно)
+# Преобразуем GROUP_ID в число
 try:
     GROUP_ID = int(GROUP_ID)
 except ValueError:
-    raise ValueError("❌ GROUP_ID должно быть числом.")
+    raise ValueError("❌ GROUP_ID должен быть числом. Пример: 123456789")
 
-# Если BOT_ID передан строкой, тоже преобразуем
+# Преобразуем BOT_ID, если он передан
 if BOT_ID:
     try:
         BOT_ID = int(BOT_ID)
     except ValueError:
-        pass  # оставляем как есть, если не число
+        pass  # оставляем как есть
 
 print(f"✅ Конфиг загружен. GROUP_ID = {GROUP_ID}")
+print(f"✅ TOKEN загружен (первые 10 символов): {TOKEN[:10]}...")
