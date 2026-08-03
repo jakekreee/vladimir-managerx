@@ -1342,12 +1342,15 @@ class Bot:
                 self.send_message(chat_id, welcome)
 
     def run(self):
-        print("Бот запущен...")
+        print("🤖 Бот запущен...")
+        print(f"📱 ID бота: {self.bot_id}")
+        print(f"📊 ID группы: {self.group_id}")
+        print("✅ Готов к работе!")
         for event in self.longpoll.listen():
             try:
                 self.handle_event(event)
             except Exception as e:
-                print(f"Ошибка в обработке: {e}")
+                print(f"❌ Ошибка в обработке: {e}")
 
 if __name__ == "__main__":
     bot = Bot()
