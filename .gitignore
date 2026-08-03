@@ -1,11 +1,34 @@
+# Python
 __pycache__/
 *.pyc
-bot_data.db
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# База данных
+*.db
+*.sqlite
+*.sqlite3
+
+# Секреты и конфиги
 .env
-venv/
+.env.local
+.env.*.local
+
+# IDE
 .idea/
 .vscode/
-.env
-bot_data.db
-__pycache__/
-*.pyc
+*.swp
+*.swo
+*~
+
+# Логи
+*.log
+
+# Amvera
+amvera.yml
