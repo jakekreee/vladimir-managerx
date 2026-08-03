@@ -5,3 +5,7 @@ bot_data.db
 venv/
 .idea/
 .vscode/
+.env
+bot_data.db
+__pycache__/
+*.pyc
