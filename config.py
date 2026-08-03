@@ -1,0 +1,5 @@
+TOKEN = "vk1.a.2hHZe0cotsj8H7nNEy0WBdch8oXvmGjlS77fBoUQFjNYjmkNc9gOMpcT-3m-sxfNtah4-tFetSnGg-DsrpJHVrh4Hf94lqx5w0ktgRkyaBzpQBgcs5HGgKYerf8Sgv6CJLyQJ3b6XaXP9vyngvSJvg4pjl_OIrKQlcCK1IG7zEGbeeFNNFPqHGQZuhQKUqAM4o2zy7RSbBW0n511PCWfbg"
+
+GROUP_ID = 240636874
+
+BOT_ID = None

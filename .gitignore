@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+bot_data.db
+.env
+venv/
+.idea/
+.vscode/
